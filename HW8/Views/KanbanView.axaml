@@ -1,0 +1,97 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="450"
+             Width="900" Height="450"
+             x:Class="HW8.Views.KanbanView">
+  <Grid RowDefinitions="*,*,10*,*" ShowGridLines="True" >
+    <Menu  Grid.Row="0">
+      <MenuItem  Header="_File">
+        <MenuItem Command="{Binding $parent[Window].DataContext.New}" Name="New" Header="_New"/>
+        <MenuItem Name="Load" Header="_Load"/>
+        <MenuItem Name="Save" Header="_Save"/>
+        <MenuItem Click="Close_App" Header="_Exit"/>
+      </MenuItem>
+      <MenuItem Click="ShowAboutWindow" Header="_About"/>
+    </Menu>
+    <DockPanel Grid.Row="1" TabIndex="2"  Background="AliceBlue" >
+      <TextBlock Width="300" DockPanel.Dock="Left"  TextAlignment="Center" Background="Green">Planned</TextBlock>
+      <TextBlock Width="300" DockPanel.Dock="Left" TextAlignment="Center"  Background="Red">InProgress</TextBlock>
+      <TextBlock DockPanel.Dock="Right" TextAlignment="Center" Background="Purple">Completed</TextBlock>
+    </DockPanel>
+    <Grid Grid.Row="2" ColumnDefinitions="*,*,*">
+      <ScrollViewer  Grid.Column="0" VerticalScrollBarVisibility="Auto">
+        <ItemsControl Items="{Binding $parent[Window].DataContext.ItemsPlanned}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <Expander Header="{Binding Header}">
+                <Grid  RowDefinitions="*,*,*,5*,*,*,*">
+                  <TextBlock Grid.Row="0" TextAlignment="Center">Header:</TextBlock>
+                    <TextBox   Grid.Row="1" Watermark="VVedite nazvanie zadachi" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Text="{Binding Header}" Name="Head0"     ></TextBox>
+                  <TextBlock Grid.Row="2" TextAlignment="Center">Text:</TextBlock>
+                  <TextBox Text="{Binding Text}" Width="200" Height="200" AcceptsReturn="True"  Watermark="VVedite text zadachi" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                  <Viewbox Grid.Row="4" Stretch="Uniform" Width="200" Height="200">
+                  <Image  Name="image" Source="{Binding PathToFile}" />
+                  </Viewbox>
+                  <Button Name="AddImage" Grid.Row="5" Command="{Binding GetFile}" CommandParameter="{Binding $parent[Window]}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >AddImage</Button>
+                  <Button Name="Delete" Grid.Row="6" CommandParameter="{Binding}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Command="{Binding $parent[Window].DataContext.DeletePlanned}" >Delete</Button>
+                </Grid>
+              </Expander>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </ScrollViewer>
+      <ScrollViewer  Grid.Column="1" VerticalScrollBarVisibility="Auto">
+        <ItemsControl Items="{Binding $parent[Window].DataContext.ItemsInProgress}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <Expander Header="{Binding Header}">
+                <Grid  RowDefinitions="*,*,*,5*,*,*,*">
+                  <TextBlock Grid.Row="0" TextAlignment="Center">Header:</TextBlock>
+                    <TextBox  Grid.Row="1" Watermark="VVedite nazvanie zadachi" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Text="{Binding Header}" Name="Head1"     ></TextBox>
+                  <TextBlock Grid.Row="2" TextAlignment="Center">Text:</TextBlock>
+                  <TextBox Text="{Binding Text}" Width="200" Height="200" AcceptsReturn="True"  Watermark="VVedite text zadachi" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                  <Viewbox Grid.Row="4" Stretch="Uniform" Width="200" Height="200">
+                    <Image  Name="image" Source="{Binding PathToFile}" />
+                  </Viewbox>
+                  <Button Name="AddImage" Grid.Row="5" Command="{Binding GetFile}" CommandParameter="{Binding $parent[Window]}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >AddImage</Button>
+                  <Button Name="Delete" Grid.Row="6" CommandParameter="{Binding}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Command="{Binding $parent[Window].DataContext.DeleteInProgress}" >Delete</Button>
+                </Grid>
+              </Expander>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </ScrollViewer>
+      <ScrollViewer  Grid.Column="2" VerticalScrollBarVisibility="Auto">
+        <ItemsControl Items="{Binding $parent[Window].DataContext.ItemsCompleted}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <Expander Header="{Binding Header}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" >
+               <Grid RowDefinitions="*,*,*,5*,*,*,*"   >
+                 <TextBlock Grid.Row="0" TextAlignment="Center">Header:</TextBlock>
+
+                 <TextBox  Grid.Row="1" Watermark="VVedite nazvanie zadachi" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Text="{Binding Header}" Name="Head2"     ></TextBox>
+
+                 <TextBlock Grid.Row="2" TextAlignment="Center">Text:</TextBlock>
+                 <TextBox Text="{Binding Text}" Width="200" Height="200" AcceptsReturn="True"  Watermark="VVedite text zadachi" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                 <Viewbox Grid.Row="4" Stretch="Uniform" Width="200" Height="200">
+                   <Image  Name="image" Source="{Binding PathToFile}" />
+                 </Viewbox>
+                 <Button Name="AddImage" Grid.Row="5" Command="{Binding GetFile}" CommandParameter="{Binding $parent[Window]}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >AddImage</Button>
+                 <Button Name="Delete" Grid.Row="6" CommandParameter="{Binding}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Command="{Binding $parent[Window].DataContext.DeleteCompleted}" >Delete</Button>
+               </Grid>
+              </Expander>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </ScrollViewer>
+    </Grid>
+    <DockPanel  TabIndex="2" Grid.Row="3" >
+      <Button Width="300" DockPanel.Dock="Left" Name="AddPlanned" Grid.Row="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Command="{Binding $parent[Window].DataContext.AddPlanned}" >Add</Button>
+      <Button  Width="300" DockPanel.Dock="Left" Name="AddInProgress" Grid.Row="3" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Command="{Binding $parent[Window].DataContext.AddInProgress}">Add</Button>
+      <Button  DockPanel.Dock="Right" Name="AddCompeted" Grid.Row="3" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Command="{Binding $parent[Window].DataContext.AddCompleted}">Add</Button>
+    </DockPanel>
+  </Grid>
+  
+</UserControl>
